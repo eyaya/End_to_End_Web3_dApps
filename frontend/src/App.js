@@ -1,35 +1,44 @@
-import React, { Component } from 'react';
-import axios from "axios";
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom'
+import Login from './components/Login';
+import SignUp from './components/Signup'
 
-class App extends Component {
-  state = {
-    Accounts: []
-  };
-  
-  
-  async componentDidMount() {
-    try {
-      const res = await fetch('http://127.0.0.1:8000/api/'); // fetching the data from api, before the page loaded
-      const Accounts = await res.json();
-      this.setState({
-        Accounts
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.Accounts.map(item => (
-          <div key={item.address}>
-            <h1>{item.private_key}</h1>
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          <div className="container">
+            <Link className="navbar-brand" to={'/'}>
+              Home
+            </Link>
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/sign-in'}>
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/sign-up'}>
+                    Sign up
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-        ))}
+        </nav>
+        <div className="auth-wrapper">
+            <Routes>
+              <Route path="/sign-in" element={<Login />} />
+              <Route path="/sign-up" element={<SignUp />} />
+            </Routes>
+        </div>
       </div>
-    );
-  }
+    </Router>
+  )
 }
-
-export default App;
+export default App
