@@ -1,14 +1,12 @@
-from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
+from .serializers import UserSerializer
 
-from .models import Account
-from .serializers import AccountSerializer
-
-
-class ListAccount(generics.ListCreateAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-
-
-class DetailAccount(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+# Create your views here.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication, ]
+    permission_classes = [IsAuthenticated, ]

@@ -1,10 +1,15 @@
-# todos/urls.py
+# backend urls.py
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+from django.urls import path
+from django.conf.urls import include
 
-from . import views
+from .views import UserViewSet
+
+router = DefaultRouter()
+router.register('users', UserViewSet)
 
 urlpatterns = [
-    
-    path('', views.ListAccount.as_view()),
-    path('<int:pk>/', views.DetailAccount.as_view()),
+    path('', include(router.urls)),
 ]
+
