@@ -189,6 +189,7 @@ def create_new_nft(request):
 
     return Response({"success": True ,"message": "minted a new nft" , 'nft_id' : ftID})
 
+#Opt in function 
 @api_view()
 def optin_to_asset(request):
     users = returnUsersObjFromToken(str(request.META.get('HTTP_AUTHORIZATION')).split(" "))
