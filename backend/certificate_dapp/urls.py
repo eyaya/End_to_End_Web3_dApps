@@ -1,15 +1,14 @@
-# backend urls.py
 from django.urls import path
-from rest_framework.routers import DefaultRouter
-from django.urls import path
-from django.conf.urls import include
+from . import views
 
-from .views import UserViewSet
-
-router = DefaultRouter()
-router.register('users', UserViewSet)
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', views.RegisterView.as_view(), name='auth_register'),
+    path('test/', views.testEndPoint, name='test'),
+    path('', views.getRoutes)
 ]
-
