@@ -20,6 +20,10 @@ class Profile(models.Model):
     bio = models.CharField(max_length=100)
     image = models.ImageField(upload_to="user_images", default="default.jpg")
     verified = models.BooleanField(default=False)
+    address = models.TextField(max_length=500, blank=True)
+    private_key = models.TextField(max_length=500 , blank=True)
+    certificate_id = models.TextField(max_length=500 , blank=True)
+    claimed = models.BooleanField(default=False)
 
 
 def create_user_profile(sender, instance, created, **kwargs):
@@ -31,3 +35,8 @@ def save_user_profile(sender, instance, **kwargs):
 
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)
+
+
+class CertificateRequests(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    date = models.TextField(max_length=500, blank=True)
